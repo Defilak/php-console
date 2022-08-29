@@ -2,7 +2,8 @@
 
 namespace Console;
 
-use Console\Parser\ArgumentParser;
+use Console\Parser\WindowsArgumentParser;
+use Console\Parser\LinuxArgumentParser;
 use Exception;
 
 class App
@@ -40,29 +41,43 @@ class App
         return $this->commands[$name] ?? false;
     }
 
-    public function run()
+    public function run($arguments = false)
     {
-        // Выписываю первый аргумент - имя скрипта - из массива.
-        array_shift($_SERVER['argv']);
-        if (count($_SERVER['argv']) == 0) {
+        if($arguments == false) {
+            // Выписываю первый аргумент - имя скрипта - из массива.
+            array_shift($_SERVER['argv']);
+            $arguments = $_SERVER['argv'];
+        }
+
+        if (count($arguments) == 0) {
             $this->help();
             return;
         }
 
-        $name = array_shift($_SERVER['argv']);
+        $name = array_shift($arguments);
         $command = $this->getCommand($name);
-        if(!$command) {
+        if (!$command) {
             throw new Exception("Команда \"$name\" не найдена!");
         }
 
-        $args = new ArgumentParser($_SERVER['argv']);
-        if ($args->hasArgument('help')) {
+        /**
+         * Выбираю парсер. Я не знал что на линухе такой формат частично работает из коробки.
+         * Потому вот.
+         */
+        $parser = null;
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $parser = new WindowsArgumentParser($arguments);
+        } else {
+            $parser = new LinuxArgumentParser($arguments);
+        }
+
+        if ($parser->hasArgument('help')) {
             print $command->getHelp();
             return;
         }
 
         try {
-            $code = $command->execute($args);
+            $code = $command->execute($parser);
             exit($code);
         } catch (Exception $ex) {
             print "Ошибка запуска команды \"$name\"!";
