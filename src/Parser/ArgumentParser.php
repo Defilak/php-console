@@ -22,7 +22,7 @@ class ArgumentParser
     const OPTIONS_REGEX = '/\[([^\]]\w+)=(.+)\]/';
 
     private array $arguments = [];
-    
+
     private array $options = [];
 
     public function __construct(array $commandLine)
@@ -61,7 +61,7 @@ class ArgumentParser
     /**
      * Возвращает true если данный аргумент был передан.
      */
-    public function getArgument($name): bool
+    public function hasArgument($name): bool
     {
         return in_array($name, $this->arguments);
     }
@@ -75,23 +75,39 @@ class ArgumentParser
     }
 
     /**
-     * Возвращает копию массива со всеми переданными аргументами.
+     * Возвращает массив со всеми переданными аргументами.
      */
     public function getArguments(): array
     {
-        return clone $this->arguments;
+        return $this->arguments;
     }
 
     /**
-     * Возвращает копию массива со всеми переданными опцями и их параметры.
+     * Возвращает массив со всеми переданными опцями и их параметры.
      */
     public function getOptions(): array
     {
-        return clone $this->options;
+        return $this->options;
     }
 
     public function __toString()
     {
-        //todo
+        $print= "Arguments:\n";
+        foreach($this->getArguments() as $arg) {
+            $print.= "  - $arg\n";
+        }
+        
+        $print.= "\nOptions:\n";
+        foreach($this->getOptions() as $key => $value) {
+            $print.= "  - $key\n";
+            if(is_array($value)) {
+                foreach($value as $value1) {
+                    $print.= "    - $value1\n";
+                }
+            } else {
+                $print.= "    - $value\n";
+            }
+        }
+        return $print;
     }
 }

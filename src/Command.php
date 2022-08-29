@@ -2,22 +2,26 @@
 
 namespace Console;
 
+use Console\Parser\ArgumentParser;
+
 abstract class Command
 {
+    public const SUCCESS = 0;
+    public const FAILTURE = 1;
+
+    private $description;
+
     protected function __construct(
         protected readonly string $name
     ) {
     }
 
-    protected function setArgument()
-    {
-    }
+    public abstract function execute(ArgumentParser $args): int;
 
-    protected function setOption()
+    public function getHelp()
     {
+        return "$this->name - $this->description";
     }
-
-    protected abstract function getDescription();
 
     /**
      * Get the value of name
@@ -25,5 +29,24 @@ abstract class Command
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get the value of description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @return  self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
     }
 }
