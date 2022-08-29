@@ -1,0 +1,7 @@
+#/usr/bin/php
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use Console\App;
+
+$app = new App();
