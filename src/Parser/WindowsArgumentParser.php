@@ -44,8 +44,7 @@ class WindowsArgumentParser extends ArgumentParser
     private function parseOption($str)
     {
         preg_match(static::OPTIONS_REGEX, $str, $matches);
-        $key = $matches[1];
-        $value = $matches[2];
+        [, $key, $value] = $matches;
         if (str_starts_with($value, '{')) {
             $value = $this->parseArg($value);
         }

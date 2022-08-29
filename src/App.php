@@ -32,7 +32,7 @@ class App
     {
         print "Доступные команды:\n";
         foreach ($this->commands as $command) {
-            print $command->getHelp() . "\n";
+            print $command->getHelp();
         }
     }
 

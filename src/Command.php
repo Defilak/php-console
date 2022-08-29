@@ -20,7 +20,7 @@ abstract class Command
 
     public function getHelp()
     {
-        return "$this->name - $this->description";
+        return "$this->name - $this->description\n";
     }
 
     /**
