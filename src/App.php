@@ -43,7 +43,7 @@ class App
 
     public function run($arguments = false)
     {
-        if($arguments == false) {
+        if ($arguments == false) {
             // Выписываю первый аргумент - имя скрипта - из массива.
             array_shift($_SERVER['argv']);
             $arguments = $_SERVER['argv'];
