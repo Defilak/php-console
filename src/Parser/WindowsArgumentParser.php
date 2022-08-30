@@ -24,11 +24,13 @@ class WindowsArgumentParser extends ArgumentParser
     {
         foreach ($commandLine as $str) {
             if (str_starts_with($str, '{')) {
-                $arg = $this->parseArg($str);
-                $this->arguments = array_merge($this->arguments, $arg);
+                $args = $this->parseArg($str);
+                foreach($args as $arg) {
+                    $this->addArgument($arg);
+                }
             } else if (str_starts_with($str, '[')) {
                 $opt = $this->parseOption($str);
-                $this->options = array_merge($this->options, $opt);
+                $this->addOption(...$opt);
             } else {
                 throw new Exception("Неправильный формат аргументов! $str");
             }
@@ -49,6 +51,6 @@ class WindowsArgumentParser extends ArgumentParser
             $value = $this->parseArg($value);
         }
 
-        return [$key => $value];
+        return [$key, $value];
     }
 }

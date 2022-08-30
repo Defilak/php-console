@@ -20,11 +20,16 @@ abstract class ArgumentParser
      */
     protected function addOption(string $key, mixed $value)
     {
-        if (isset($this->options[$key]) && !is_array($this->options[$key])) {
-            $this->options[$key] = [$this->options[$key]];
-        } else {
-            $this->options[$key][] = $value;
+        if(!isset($this->options[$key])) {
+            $this->options[$key] = $value;
+            return;
         }
+        
+        if(!is_array($this->options[$key])) {
+            $this->options[$key] = [$this->options[$key]];
+        }
+        
+        $this->options[$key][] = $value;
     }
 
     /**
