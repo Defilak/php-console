@@ -11,3 +11,19 @@
 ```
 bin/php-console test {verbose,overwrite} [log_file=app.log] {unlimited} [methods={create,update,delete}] [paginate=50] {log}
 ```
+
+## Запуск
+```
+$app = new Console\App();
+
+$app->add(new \App\Commands\TestCommand());
+$app->add(new \App\Commands\Test2Command());
+
+
+try {
+    $app->run();
+} catch (Exception $ex) {
+    print "\e[31m" . $ex->getMessage() . "\n\e[0m";
+}
+
+```
