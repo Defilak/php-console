@@ -1,7 +1,12 @@
 {
     "name": "defi/console",
-    "version": "1.0.0",
-    "minimum-stability": "dev",
+    "homepage": "https://github.com/defilak/php-console",
+    "description": "Библиотека для создания CLI.",
+    "authors": [
+        {
+            "name": "Defi"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Console\\": "src/",
