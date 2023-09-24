@@ -5,13 +5,6 @@
 В директории app находится тестовое приложение. В src - сама библиотека.
 Написано используя PHP 8.1.9.
 
-Команда test выводит список всех переданных ей аргументов.
-
-## Использование:
-```
-bin/php-console test {verbose,overwrite} [log_file=app.log] {unlimited} [methods={create,update,delete}] [paginate=50] {log}
-```
-
 ## Запуск
 ```
 $app = new Console\App();
