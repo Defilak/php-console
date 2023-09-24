@@ -8,6 +8,9 @@ use Exception;
 
 class App
 {
+    private string $name;
+    private string $version;
+
     private array $commands = [];
 
     /**
@@ -30,9 +33,10 @@ class App
      */
     public function help()
     {
+        print "$this->name v$this->version.\n";
         print "Доступные команды:\n";
         foreach ($this->commands as $command) {
-            print $command->getHelp();
+            print '    ' . $command->getHelp();
         }
     }
 
@@ -83,5 +87,49 @@ class App
             print "Ошибка запуска команды \"$name\"!";
             print $ex->getTraceAsString();
         }
+    }
+
+    /**
+     * Get the value of name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of version
+     *
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return $this->version;
+    }
+
+    /**
+     * Set the value of version
+     *
+     * @param string $version
+     *
+     * @return self
+     */
+    public function setVersion(string $version): self
+    {
+        $this->version = $version;
+
+        return $this;
     }
 }
